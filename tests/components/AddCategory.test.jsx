@@ -17,7 +17,6 @@ describe('Prueba del AddCategory', () => {
         const inputValue = 'Saitama';
         //Simulacion de la funcion
         const onNewCategory = jest.fn();
-        //TODO: ???
 
         render( <AddCategory onNewCategory={ onNewCategory} />);
 
@@ -34,5 +33,25 @@ describe('Prueba del AddCategory', () => {
         expect( onNewCategory ).toHaveBeenCalled();
         expect( onNewCategory ).toHaveBeenCalledTimes(1);
         expect( onNewCategory ).toHaveBeenCalledWith( inputValue );
+    })
+
+    test('No debe de llamar el onNewCategory si el input esta activo', () => {
+
+        const inputValue = '';
+        //Simulacion de la funcion
+        const onNewCategory = jest.fn();
+        //TODO: ???
+
+        render( <AddCategory onNewCategory={ onNewCategory} />);
+
+        const input = screen.getByRole('textbox');
+        const form = screen.getByRole('form');
+
+        fireEvent.input( input, { target: { value: inputValue } } );
+        fireEvent.submit( form );
+
+        expect( input.value ).toBe('');
+
+        expect( onNewCategory ).toHaveBeenCalledTimes(0);
     })
 })
